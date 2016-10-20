@@ -1,6 +1,7 @@
 package com.example.huo.mydemo;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.example.huo.mydemo.component.AppComponent;
 import com.example.huo.mydemo.component.DaggerAppComponent;
@@ -35,6 +36,11 @@ public class GanKApplication extends Application {
         initComponent();
     }
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+    }
+
     /**
      * Component
      */
@@ -47,6 +53,10 @@ public class GanKApplication extends Application {
 
     public AppComponent getAppComponent() {
         return appComponent;
+    }
+
+    private GanKApplication instance() {
+        return this;
     }
 
     /**

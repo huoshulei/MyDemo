@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 
 import com.example.huo.mydemo.GanKApplication;
 import com.example.huo.mydemo.component.AppComponent;
+import com.example.huo.mydemo.view.loadding.CustomDialog;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,10 +19,11 @@ import com.example.huo.mydemo.component.AppComponent;
 public abstract class BaseFragment extends Fragment {
 
 
+    private CustomDialog dialog;
+
     protected abstract
     @LayoutRes
     int getLayoutResId();
-
 
     public BaseFragment() {
         // Required empty public constructor
@@ -38,4 +41,33 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected abstract void setupActivityComponent(AppComponent appComponent);
+
+    public void hideDialog() {
+        if (dialog != null) dialog.hide();
+    }
+
+    public void showDialog() {
+        initDialog().show();
+    }
+
+    private void dismissDialog() {
+        if (dialog != null) {
+            dialog.dismiss();
+            dialog = null;
+        }
+    }
+
+    private CustomDialog initDialog() {
+        if (dialog == null) {
+            dialog = CustomDialog.instance(getActivity());
+            dialog.setCancelable(false);
+        }
+        return dialog;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        dismissDialog();
+    }
 }

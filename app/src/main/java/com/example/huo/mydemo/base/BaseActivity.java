@@ -7,10 +7,14 @@ import android.os.Bundle;
 import com.example.huo.mydemo.GanKApplication;
 import com.example.huo.mydemo.api.GanKApiService;
 import com.example.huo.mydemo.component.AppComponent;
+import com.example.huo.mydemo.view.loadding.CustomDialog;
 
 import javax.inject.Inject;
 
 public abstract class BaseActivity extends AppCompatActivity {
+
+    private CustomDialog dialog;
+
     protected abstract
     @LayoutRes
     int getLayoutResId();
@@ -32,4 +36,35 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract void configView();
 
     protected abstract void initData();
+
+    public void hideDialog() {
+        if (dialog != null) dialog.hide();
+    }
+    public GanKApplication currentApplication(){
+        return (GanKApplication) getApplication();
+    }
+    public void showDialog() {
+        initDialog().show();
+    }
+
+    private void dismissDialog() {
+        if (dialog != null) {
+            dialog.dismiss();
+            dialog = null;
+        }
+    }
+
+    private CustomDialog initDialog() {
+        if (dialog == null) {
+            dialog = CustomDialog.instance(this);
+            dialog.setCancelable(false);
+        }
+        return dialog;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dismissDialog();
+    }
 }
