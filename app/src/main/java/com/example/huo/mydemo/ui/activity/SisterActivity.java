@@ -5,20 +5,22 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import com.example.huo.myappgankio.R;
-import com.example.huo.myappgankio.animator.MyAnimation;
-import com.example.huo.myappgankio.base.BaseActivity;
+
+import com.android.annotations.NonNull;
+import com.example.huo.mydemo.R;
+import com.example.huo.mydemo.animator.MyAnimation;
+import com.example.huo.mydemo.base.BaseActivity;
+import com.example.huo.mydemo.component.AppComponent;
 
 import java.io.IOException;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.ResponseBody;
@@ -36,18 +38,18 @@ import rx.schedulers.Schedulers;
 
 public class SisterActivity extends BaseActivity {
     private static final String TAG = "SisterActivity";
-    Uri mUri;
-    @BindView(R.id.iv_sister)
+    Uri       mUri;
+    //    @BindView(R.id.iv_sister)
     ImageView mIvSister;
     private Animation   mAnimation;
     private MyAnimation mMyAnimation;
 
-    @Override
+    //    @Override
     public void initView() {
         setContentView(R.layout.activity_sister);
-        ButterKnife.bind(this);
+//        ButterKnife.bind(this);
         mUri = getIntent().getData();
-        super.initView();
+//        super.initView();
         initAnim();
         initDataRetrofit(mUri);
     }
@@ -55,10 +57,10 @@ public class SisterActivity extends BaseActivity {
     private void initAnim() {
         mAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim
                 .sister_anim);
-        mMyAnimation = new MyAnimation(1500, getWidth()/2, getHeight()/2);
+        mMyAnimation = new MyAnimation(1500, getWidth() / 2, getHeight() / 2);
     }
 
-//    @Override
+    //    @Override
 //    public void initData() {
 //        ImageRequest imageRequest = new ImageRequest(mUri.toString(), new Response
 //                .Listener<Bitmap>() {
@@ -79,7 +81,21 @@ public class SisterActivity extends BaseActivity {
 //        DisplayMetrics metrics = getResources().getDisplayMetrics();
 //        Log.d(TAG, "initData: " + metrics.heightPixels + ">>>>" + metrics.widthPixels);
 //    }
+    public float getWidth() {
+        DisplayMetrics metrics = getDisplayMetrics();
+        return metrics.widthPixels;
+    }
 
+    public float getHeight() {
+        DisplayMetrics metrics = getDisplayMetrics();
+        return metrics.heightPixels;
+    }
+    @NonNull
+    private DisplayMetrics getDisplayMetrics() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        return metrics;
+    }
     /**
      * 这个只是Retrofit单体实践
      */
@@ -184,6 +200,26 @@ public class SisterActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected int getLayoutResId() {
+        return 0;
+    }
+
+    @Override
+    protected void setupActivityComponent(AppComponent appComponent) {
+
+    }
+
+    @Override
+    protected void configView() {
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
     /**
      * 在这里 你有无限可能
      * 发挥的余地不可想象
@@ -193,7 +229,7 @@ public class SisterActivity extends BaseActivity {
         Observable<ResponseBody> getSister(@Url String url);
     }
 
-    @Override
+    //    @Override
     public void initEvent() {
         mIvSister.setOnClickListener(new View.OnClickListener() {
             @Override

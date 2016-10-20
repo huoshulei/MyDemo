@@ -5,7 +5,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
@@ -13,7 +12,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.huo.mydemo.R;
 import com.example.huo.mydemo.base.BaseActivity;
+import com.example.huo.mydemo.component.AppComponent;
+import com.example.huo.mydemo.ui.fragment.SisterFragment;
 
 
 public class MainActivity extends BaseActivity {
@@ -33,17 +35,16 @@ public class MainActivity extends BaseActivity {
 ListView mLeftDrawer;
 
     //    MyAnimation mAnimation;
-    @Override
+//    @Override
     public void initView() {
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
         FragmentManager     frameLayout = getFragmentManager();
         FragmentTransaction transaction = frameLayout.beginTransaction();
         transaction.replace(R.id.sfl_sister, new SisterFragment());
         transaction.commit();
         title = "福利";
         mTvTitle.setText(title);
-        mTvTitle.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.fuli, 0, 0, 0);
+        mTvTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.favorite, 0, 0, 0);
         mTvTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,8 +52,8 @@ ListView mLeftDrawer;
 //                mLlMain.setAnimation(mAnimation);
             }
         });
-        mAdapter = new DrawerAdapter(getApplicationContext());
-        mLeftDrawer.setAdapter(mAdapter);
+//        mAdapter = new DrawerAdapter(getApplicationContext());
+//        mLeftDrawer.setAdapter(mAdapter);
         mLeftDrawer.setOnItemClickListener(new DrawerItemClickListener());
 //        mDrawerToggle = new DrawerMenuToggle(this, mActivityMain, 0, R.string.drawer_open, R
 //                .string.drawer_close);
@@ -173,6 +174,26 @@ ListView mLeftDrawer;
         super.onBackPressed();
     }
 
+    @Override
+    protected int getLayoutResId() {
+        return 0;
+    }
+
+    @Override
+    protected void setupActivityComponent(AppComponent appComponent) {
+
+    }
+
+    @Override
+    protected void configView() {
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
 
         private Fragment mContentFragment;
@@ -191,13 +212,13 @@ ListView mLeftDrawer;
 //            Bundle bd = new Bundle();
 //            bd.putString(AndroidFragment.SELECTED_ITEM, mAdapter.getItem(position)
 //                    .getMenuTitle());
-            if (position == 0 || mAdapter.getItem(position).getMenuTitle().equals("福利")) {
-                mContentFragment = new SisterFragment();
-            } else {
-                mContentFragment = AndroidFragment.newInstance("data", mAdapter.getItem
-                        (position).getMenuTitle());
-                Log.d(TAG, "selectItem: " + mAdapter.getItem(position).getMenuTitle());
-            }
+//            if (position == 0 || mAdapter.getItem(position).getMenuTitle().equals("福利")) {
+//                mContentFragment = new SisterFragment();
+//            } else {
+//                mContentFragment = AndroidFragment.newInstance("data", mAdapter.getItem
+//                        (position).getMenuTitle());
+//                Log.d(TAG, "selectItem: " + mAdapter.getItem(position).getMenuTitle());
+//            }
 //            contentFragment.setArguments(bd);
 
             FragmentManager     fragmentManager = getFragmentManager();
@@ -207,9 +228,9 @@ ListView mLeftDrawer;
             //将选中的菜单项置为高亮
             mLeftDrawer.setItemChecked(position, true);
             //将ActionBar中标题更改为选中的标题项
-            mTvTitle.setText(mAdapter.getItem(position).getMenuTitle());
-            mTvTitle.setCompoundDrawablesWithIntrinsicBounds(mAdapter.getItem(position)
-                    .getMenuIcon(), 0, 0, 0);
+//            mTvTitle.setText(mAdapter.getItem(position).getMenuTitle());
+//            mTvTitle.setCompoundDrawablesWithIntrinsicBounds(mAdapter.getItem(position)
+//                    .getMenuIcon(), 0, 0, 0);
 //            setTitle(mAdapter.getItem(position).getMenuTitle());
             //将当前的侧滑菜单关闭，调用DrawerLayout的closeDrawer（）方法即可
             mActivityMain.closeDrawer(mLeftDrawer);

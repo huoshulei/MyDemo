@@ -15,18 +15,12 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.example.huo.myappgankio.R;
-import com.example.huo.myappgankio.adapter.ListAdapter;
-import com.example.huo.myappgankio.base.BaseFragment;
-import com.example.huo.myappgankio.bean.ResultBean;
-import com.example.huo.myappgankio.http.HttpRetrofitDemo;
-import com.example.huo.myappgankio.rxjava.HttpRxJava;
-import com.example.huo.myappgankio.ui.activity.WebActivity;
+import com.example.huo.mydemo.R;
+import com.example.huo.mydemo.base.BaseFragment;
+import com.example.huo.mydemo.component.AppComponent;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,11 +31,16 @@ public class AndroidFragment extends BaseFragment {
     String data = "data";
     String type = "Android";
     int    page = 1;
-    HttpRetrofitDemo mRetrofitDemo;
-    @BindView(R.id.rv_show)
+//    HttpRetrofitDemo mRetrofitDemo;
+//    @BindView(R.id.rv_show)
     RecyclerView mRvShow;
-    ListAdapter mAdapter;
+//    ListAdapter mAdapter;
     private boolean isLoadNext = true;
+
+    @Override
+    protected int getLayoutResId() {
+        return 0;
+    }
 
     public AndroidFragment() {
         // Required empty public constructor
@@ -69,7 +68,7 @@ public class AndroidFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_android, container, false);
-        ButterKnife.bind(this, view);
+//        ButterKnife.bind(this, view);
         return view;
     }
 
@@ -78,12 +77,17 @@ public class AndroidFragment extends BaseFragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRvShow.setLayoutManager(layoutManager);
-        mAdapter = new ListAdapter(getActivity(), R.layout.layout_item);
-        mAdapter.openLoadAnimation();
-        mRvShow.setAdapter(mAdapter);
-        mAdapter.openLoadMore(true);
-        mAdapter.setOnRecyclerViewItemClickListener(getOnRecyclerViewItemClickListener());
-        mAdapter.setOnLoadMoreListener(getRequestLoadMoreListener());
+//        mAdapter = new ListAdapter(getActivity(), R.layout.layout_item);
+//        mAdapter.openLoadAnimation();
+//        mRvShow.setAdapter(mAdapter);
+//        mAdapter.openLoadMore(true);
+//        mAdapter.setOnRecyclerViewItemClickListener(getOnRecyclerViewItemClickListener());
+//        mAdapter.setOnLoadMoreListener(getRequestLoadMoreListener());
+    }
+
+    @Override
+    protected void setupActivityComponent(AppComponent appComponent) {
+
     }
 
     @NonNull
@@ -100,47 +104,47 @@ public class AndroidFragment extends BaseFragment {
         };
     }
 
-    @NonNull
-    private BaseQuickAdapter.OnRecyclerViewItemClickListener getOnRecyclerViewItemClickListener() {
-        return new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
-
-
-            @Override
-            public void onItemClick(View view, int i) {
-                Uri uri = Uri.parse(((ResultBean) mAdapter.getData().get(i)).getUrl());
-                if (type.equals("休息视频")) {
-                    mMainActivity.startActivity(new Intent(Intent.ACTION_VIEW, uri));
-                } else {
-                    mMainActivity.startActivity(WebActivity.class, uri);
-                }
-            }
-        };
-    }
+//    @NonNull
+//    private BaseQuickAdapter.OnRecyclerViewItemClickListener getOnRecyclerViewItemClickListener() {
+//        return new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+//
+//
+//            @Override
+//            public void onItemClick(View view, int i) {
+//                Uri uri = Uri.parse(((ResultBean) mAdapter.getData().get(i)).getUrl());
+//                if (type.equals("休息视频")) {
+//                    mMainActivity.startActivity(new Intent(Intent.ACTION_VIEW, uri));
+//                } else {
+//                    mMainActivity.startActivity(WebActivity.class, uri);
+//                }
+//            }
+//        };
+//    }
 
     private void getData(String page) {
-        if (mRetrofitDemo == null)
-            mRetrofitDemo = new HttpRetrofitDemo();
-        mRetrofitDemo.getData(data, type, "20", page);
-        mRetrofitDemo.setRxjavaListener(new HttpRxJava.RxjavaListener() {
-            @Override
-            public void onNext(List t) {
-                if (t.size() <= 0) {
-                    Toast.makeText(getActivity(), "已无更多可以加载", Toast.LENGTH_SHORT).show();
-                    mAdapter.openLoadMore(false);
-                    return;
-                }
-                Log.d(TAG, "onNext:>>>>>>>>>>>> " + ((ResultBean) t.get(2)).getDesc());
-                mAdapter.addData(t);
-                mAdapter.setPageSize(mAdapter.getPageSize() + t.size());
-                mAdapter.notifyDataChangedAfterLoadMore(true);
-                isLoadNext = true;
-            }
-
-            @Override
-            public void onError() {
-                mMainActivity.showToast("请检查网路！");
-            }
-        });
+//        if (mRetrofitDemo == null)
+//            mRetrofitDemo = new HttpRetrofitDemo();
+//        mRetrofitDemo.getData(data, type, "20", page);
+//        mRetrofitDemo.setRxjavaListener(new HttpRxJava.RxjavaListener() {
+//            @Override
+//            public void onNext(List t) {
+//                if (t.size() <= 0) {
+//                    Toast.makeText(getActivity(), "已无更多可以加载", Toast.LENGTH_SHORT).show();
+//                    mAdapter.openLoadMore(false);
+//                    return;
+//                }
+//                Log.d(TAG, "onNext:>>>>>>>>>>>> " + ((ResultBean) t.get(2)).getDesc());
+//                mAdapter.addData(t);
+//                mAdapter.setPageSize(mAdapter.getPageSize() + t.size());
+//                mAdapter.notifyDataChangedAfterLoadMore(true);
+//                isLoadNext = true;
+//            }
+//
+//            @Override
+//            public void onError() {
+//                mMainActivity.showToast("请检查网路！");
+//            }
+//        });
     }
 
 }

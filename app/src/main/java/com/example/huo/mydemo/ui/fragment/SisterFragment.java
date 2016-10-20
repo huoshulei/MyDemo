@@ -11,121 +11,66 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.ImageLoader;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.example.huo.myappgankio.R;
-import com.example.huo.myappgankio.adapter.SisterAdapter;
-import com.example.huo.myappgankio.animator.SisterAnimator;
-import com.example.huo.myappgankio.base.BaseFragment;
-import com.example.huo.myappgankio.bean.ResultBean;
-import com.example.huo.myappgankio.http.HttpRetrofitDemo;
-import com.example.huo.myappgankio.rxjava.HttpRxJava.RxjavaListener;
-import com.example.huo.myappgankio.ui.activity.MainActivity;
-import com.example.huo.myappgankio.ui.activity.SisterActivity;
-import com.example.huo.myappgankio.util.BitmpCacheUtil;
+import com.example.huo.mydemo.R;
+import com.example.huo.mydemo.animator.SisterAnimator;
+import com.example.huo.mydemo.base.BaseFragment;
+import com.example.huo.mydemo.bean.ResultBean;
+import com.example.huo.mydemo.component.AppComponent;
 
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * A simple {@link BaseFragment} subclass.
  */
 public class SisterFragment extends BaseFragment {
     private static final String TAG = "SisterFragment";
-    @BindView(R.id.rv_sister)
+//    @BindView(R.id.rv_sister)
     RecyclerView mRvSister;
-    private SisterAdapter mAdapter;
+//    private SisterAdapter mAdapter;
     //    String URL = "http://gank.io/api/data/福利/20/";
     int i = 1;
     private boolean isLoadNext = false;
-    private HttpRetrofitDemo mRetrofit;
+//    private HttpRetrofitDemo mRetrofit;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getData(i + "");
-//        getData(URL + "1");
+//        getData(i + "");
     }
 
-//    private void getData(String url) {
-//        Log.d(TAG, "getData: 这是什么鬼" + url);
-//        StringRequest request = new StringRequest(url, new Response.Listener<String>() {
+
+//    private void getData(String page) {
+//        if (mRetrofit == null)
+//            mRetrofit = new HttpRetrofitDemo();
+//        mRetrofit.getData("data", "福利", "20", page);
+//
+//
+//        mRetrofit.setRxjavaListener(new RxjavaListener() {
 //
 //            @Override
-//            public void onResponse(String response) {
-//                SisterBean sisterBean = new Gson().fromJson(response, SisterBean.class);
-//                if (sisterBean.getResults().size() <= 0) {
+//            public void onNext(List t) {
+//                if (t.size() <= 0) {
 //                    Toast.makeText(getActivity(), "已无更多可以加载", Toast.LENGTH_SHORT).show();
 //                    mAdapter.openLoadMore(false);
 //                    return;
 //                }
-//                mAdapter.addData(sisterBean.getResults());
-//                mAdapter.setPageSize(mAdapter.getPageSize() + sisterBean.getResults().size());
+//                mAdapter.addData(t);
+//                mAdapter.setPageSize(mAdapter.getPageSize() + t.size());
 //                mAdapter.notifyDataChangedAfterLoadMore(true);
 //                isLoadNext = true;
 //            }
-//        }, new Response.ErrorListener() {
+//
 //            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(getActivity(), "小伙子 你确定有网络！", Toast.LENGTH_SHORT).show();
+//            public void onError() {
+//                mMainActivity.showToast("请检查网络！");
 //            }
 //        });
-//        mQueue.add(request);
 //    }
 
-    private void getData(String page) {
-        if (mRetrofit == null)
-            mRetrofit = new HttpRetrofitDemo();
-        mRetrofit.getData("data", "福利", "20", page);
-
-//        new HttpRxJava<ResultBean>() {
-//
-//            int ii = 0;
-//            @Override
-//            public Object getObject() {
-//                return null;
-//            }
-//
-//            @Override
-//            public Observable<GankIoEntity<List<ResultBean>>> getObsercable() {
-//                return null;
-//            }
-//
-//            RxjavaListener  r = new RxjavaListener<ResultBean>() {
-//                @Override
-//                public void onNext(List t) {
-//                    ii ++;
-//                }
-//
-//                @Override
-//                public void onError() {
-//
-//                }
-//            };
-//        };
-
-        mRetrofit.setRxjavaListener(new RxjavaListener() {
-
-            @Override
-            public void onNext(List t) {
-                if (t.size() <= 0) {
-                    Toast.makeText(getActivity(), "已无更多可以加载", Toast.LENGTH_SHORT).show();
-                    mAdapter.openLoadMore(false);
-                    return;
-                }
-                mAdapter.addData(t);
-                mAdapter.setPageSize(mAdapter.getPageSize() + t.size());
-                mAdapter.notifyDataChangedAfterLoadMore(true);
-                isLoadNext = true;
-            }
-
-            @Override
-            public void onError() {
-                mMainActivity.showToast("请检查网络！");
-            }
-        });
+    @Override
+    protected int getLayoutResId() {
+        return 0;
     }
 
     public SisterFragment() {
@@ -138,7 +83,6 @@ public class SisterFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sister, container, false);
-        ButterKnife.bind(this, view);
         return view;
     }
 
@@ -147,20 +91,25 @@ public class SisterFragment extends BaseFragment {
         mRvSister.setHasFixedSize(true);
         mRvSister.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager
                 .VERTICAL));
-        mAdapter = new SisterAdapter(getActivity(), R.layout.layout_photo_item, new
-                ImageLoader(mQueue, new BitmpCacheUtil()));
-        mAdapter.openLoadAnimation();
-        mRvSister.setAdapter(mAdapter);
-        SisterAnimator animator = new SisterAnimator();
-        mRvSister.setItemAnimator(animator);
-        animator.setStartActivity(getStartActivity());
+//        mAdapter = new SisterAdapter(getActivity(), R.layout.layout_photo_item, new
+//                ImageLoader(mQueue, new BitmpCacheUtil()));
+//        mAdapter.openLoadAnimation();
+//        mRvSister.setAdapter(mAdapter);
+//        SisterAnimator animator = new SisterAnimator();
+//        mRvSister.setItemAnimator(animator);
+//        animator.setStartActivity(getStartActivity());
 //        mAdapter.setOnRecyclerViewItemClickListener(getOnRecyclerViewItemClickListener());
-        mAdapter.setOnRecyclerViewItemChildClickListener(getRecyclerViewItem());
+//        mAdapter.setOnRecyclerViewItemChildClickListener(getRecyclerViewItem());
 //        mAdapter.addFooterView(getView());
-        mAdapter.openLoadMore(true);
+//        mAdapter.openLoadMore(true);
 //        mAdapter.setLoadingView();
-        mAdapter.setOnLoadMoreListener(getRequestLoadMoreListener());
+//        mAdapter.setOnLoadMoreListener(getRequestLoadMoreListener());
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    protected void setupActivityComponent(AppComponent appComponent) {
+
     }
 
     @NonNull
@@ -171,47 +120,34 @@ public class SisterFragment extends BaseFragment {
                 if (isLoadNext) {
                     isLoadNext = false;
                     i++;
-                    getData("" + i);
+//                    getData("" + i);
                 }
             }
         };
     }
 
-    @NonNull
-    private BaseQuickAdapter.OnRecyclerViewItemChildClickListener getRecyclerViewItem() {
-        return new BaseQuickAdapter.OnRecyclerViewItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
-                mAdapter.notifyItemChanged(i, SisterAdapter.ACTION_LIKE_IMAGE_CLICKED);
+//    @NonNull
+//    private BaseQuickAdapter.OnRecyclerViewItemChildClickListener getRecyclerViewItem() {
+//        return new BaseQuickAdapter.OnRecyclerViewItemChildClickListener() {
+//            @Override
+//            public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+//                mAdapter.notifyItemChanged(i, SisterAdapter.ACTION_LIKE_IMAGE_CLICKED);
 //                Toast.makeText(getActivity(), "点了吗" + i, Toast.LENGTH_SHORT).show();
-            }
-        };
-    }
+//            }
+//        };
+//    }
 
     @NonNull
     private SisterAnimator.StartActivity getStartActivity() {
         return new SisterAnimator.StartActivity() {
             @Override
             public void startActivity(int position) {
-                Uri uri = Uri.parse(((ResultBean) mAdapter.getData().get(position)).getUrl());
-                ((MainActivity) getActivity()).startActivity(SisterActivity.class, uri);
+//                Uri uri = Uri.parse(((ResultBean) mAdapter.getData().get(position)).getUrl());
+//                ((MainActivity) getActivity()).startActivity(SisterActivity.class, uri);
             }
 
         };
     }
 
-//    @NonNull
-//    private BaseQuickAdapter.OnRecyclerViewItemClickListener getOnRecyclerViewItemClickListener
-// () {
-//        return new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, int i) {
-//
-////                view.findViewById(R.id.v_bg_like).setVisibility(View.VISIBLE);
-////                view.findViewById(R.id.iv_like).setVisibility(View.VISIBLE);
-//                Toast.makeText(getActivity(), "点了吗", Toast.LENGTH_SHORT).show();
-//            }
-//        };
-//    }
 }
 
