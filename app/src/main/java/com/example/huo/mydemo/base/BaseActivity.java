@@ -55,7 +55,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     private CustomDialog initDialog() {
         if (dialog == null) {
             dialog = CustomDialog.instance(this);
-            dialog.setCancelable(false);
+//            dialog.setCancelable(true);
+            dialog.setCanceledOnTouchOutside(false);
         }
         return dialog;
     }
