@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.huo.mydemo.GanKApplication;
 import com.example.huo.mydemo.R;
 
 

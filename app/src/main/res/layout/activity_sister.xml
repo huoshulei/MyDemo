@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_sister"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardBackgroundColor="@color/menu_fragment_background"
+    app:cardCornerRadius="@dimen/dp_10"
+    app:cardUseCompatPadding="true"
+    app:contentPadding="5dp">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/cancel_action"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.bm.library.PhotoView
+                android:id="@+id/iv_sister"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"/>
+        </RelativeLayout>
+    </android.support.design.widget.CoordinatorLayout>
+</android.support.v7.widget.CardView>

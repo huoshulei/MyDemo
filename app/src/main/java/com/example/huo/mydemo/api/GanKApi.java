@@ -33,7 +33,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public enum GanKApi {
     API;
     private GanKApiService service;
-    private static final String BASE_URL = "";
+    private static final String BASE_URL = "http://gank.io/";
 
     GanKApi() {
         service = new Retrofit.Builder().baseUrl(BASE_URL)

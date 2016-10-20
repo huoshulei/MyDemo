@@ -40,9 +40,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void hideDialog() {
         if (dialog != null) dialog.hide();
     }
-    public GanKApplication currentApplication(){
-        return (GanKApplication) getApplication();
-    }
+
     public void showDialog() {
         initDialog().show();
     }

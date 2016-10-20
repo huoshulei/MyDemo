@@ -55,9 +55,6 @@ public class GanKApplication extends Application {
         return appComponent;
     }
 
-    private GanKApplication instance() {
-        return this;
-    }
 
     /**
      * 初始化日志信息
